@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require('cors')
-const fetch = require('node-fetch');
-const grpcClient = require('./grpc/client');
+const grpcServer = require('./grpc/server');
 
 require("@opentelemetry/api");
 
@@ -20,6 +19,9 @@ app.all("/command", async (req, res) => {
       console.error('Error:', error);
   }
 });
+
+// run grpc server
+grpcServer();
 
 const port = process.env.APP_PORT || "3002";
 app.listen(port, function() {

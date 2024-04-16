@@ -16,7 +16,7 @@ var news_proto = grpc.loadPackageDefinition(packageDefinition).news;
  * Implements the SayNews RPC method.
  */
 function sayNews(call, callback) {
-  callback(null, {message: 'News ' + call.request.name});
+  callback(null, {content: 'News with title: ' + call.request.title, priority: 10});
 }
 
 /**
@@ -31,4 +31,4 @@ function main() {
   });
 }
 
-main();
+module.exports = main;
