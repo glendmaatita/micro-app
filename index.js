@@ -41,8 +41,9 @@ kafkaConsumer.on('error', function (error) {
 
 // bull
 const bullQueue = new Queue('payment', 'redis://127.0.0.1:6379');
-bullQueue.add({
-  payment: 'There is new payment'
+bullQueue.process(async (job, done) => {
+  console.log('Received payment:', job.data.payment);
+  done();
 });
 
 const port = process.env.APP_PORT || "3002";
