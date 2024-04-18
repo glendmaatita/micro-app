@@ -27,7 +27,7 @@ grpcServer();
 
 // kafka
 const kafkaClient = new kafka.KafkaClient({kafkaHost: process.env.KAFKA_HOST || 'localhost:9092'});
-const kafkaTopics = [{ topic: 'booking' }];
+const kafkaTopics = [{ topic: process.env.KAFKA_TOPIC }];
 const kafkaConsumer = new kafka.Consumer(kafkaClient, kafkaTopics, { autoCommit: true });
 
 // Set up the event handlers
@@ -40,7 +40,7 @@ kafkaConsumer.on('error', function (error) {
 });
 
 // bull
-const bullQueue = new Queue('payment', process.env.REDIS_URL || 'redis://127.0.0.1:6379');
+const bullQueue = new Queue(process.env.REDIS_TOPIC, process.env.REDIS_URL || 'redis://127.0.0.1:6379');
 bullQueue.process(async (job, done) => {
   console.log('Received payment:', job.data.payment);
   done();
